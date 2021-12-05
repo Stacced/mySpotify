@@ -2,21 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import CssBaseline from '@mui/material/CssBaseline';
-import PageNotFound from './components/PageNotFound';
+import { BrowserRouter } from 'react-router-dom';
+import { SpotifyProvider } from './hooks/spotify';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline/>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <SpotifyProvider>
+        <App/>
+      </SpotifyProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
