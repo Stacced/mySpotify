@@ -1,6 +1,7 @@
 import Navigation from "./Navigation";
 import Grid from '@mui/material/Grid';
-import { CssBaseline } from "@mui/material";
+import { Container, CssBaseline } from "@mui/material";
+import Player from "./Player";
 
 const Dashboard = () => {
     return (
@@ -11,7 +12,9 @@ const Dashboard = () => {
                 <Navigation/>
             </Grid>
             <Grid item xs={6} sm={8} md={10} sx={{ backgroundColor: 'black' }}>
-                
+                <Container sx={{ position: 'fixed', backgroundColor: 'blue' }}>
+                    <Player/>
+                </Container>
             </Grid>
         </Grid>
         </>
