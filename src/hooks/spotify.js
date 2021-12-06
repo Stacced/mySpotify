@@ -120,7 +120,7 @@ const useProvideSpotify = () => {
         const { hostname: openerHostname } = new URL(window.opener.location.href);
         const { hostname: currentHostname } = new URL(window.location.href);
 
-        return window.opener && window.opener !== window && !!window.opener.spotifyAuthCallback && openerHostname === currentHostname && window.opener.history.length === 1;
+        return window.opener && window.opener !== window && !!window.opener.spotifyAuthCallback && openerHostname === currentHostname;
     }
 
     const hasTokenExpired = () => {
