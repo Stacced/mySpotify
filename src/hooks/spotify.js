@@ -191,6 +191,7 @@ const useProvideSpotify = () => {
         get hasRedirectedFromValidSpotifyAuth() {
             return hasRedirectedFromValidSpotifyAuth();
         },
-        saveTokenWhenRedirected
+        saveTokenWhenRedirected,
+        callEndpoint
     }
 }
