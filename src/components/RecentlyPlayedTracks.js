@@ -13,6 +13,10 @@ const RecentlyPlayedTracks = () => {
             });
     }, []);
 
+    const playTrack = trackUri => {
+        callEndpoint({ path: '/me/player/play', method: 'PUT', body: { uris: [trackUri], position_ms: 0 } });
+    };
+
     return (
         <>
         <List>
@@ -20,7 +24,7 @@ const RecentlyPlayedTracks = () => {
                 recentlyPlayedTracks
                 .map(p => p.track)
                 .map(p => (
-                    <ListItem>
+                    <ListItem key={p.id + Math.random().toString()} data-id={p.id} onClick={() => { playTrack(p.uri) }}>
                         <ListItemAvatar>
                             <Avatar alt="Track image" src={p.album.images[0].url} />
                         </ListItemAvatar>
