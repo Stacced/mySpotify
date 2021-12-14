@@ -1,7 +1,7 @@
 import { Box, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Divider } from '@mui/material';
 import { Home as HomeIcon, Search as SearchIcon, LibraryMusic as LibraryMusicIcon } from '@mui/icons-material';
 
-import Playlists from './Playlists';
+import RecentlyPlayedTracks from './RecentlyPlayedTracks';
 
 const Navigation = () => {
     return (
@@ -35,8 +35,8 @@ const Navigation = () => {
             </List>
         </Box>
         <Divider />
-        <Box sx={{ bgcolor: 'background.paper' }}>
-            <Playlists />
+        <Box sx={{ bgcolor: 'background.paper', overflow: 'auto', maxHeight: '75vh' }}>
+            <RecentlyPlayedTracks />
         </Box>
         </>
     )
