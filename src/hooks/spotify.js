@@ -42,20 +42,26 @@ const useProvideSpotify = () => {
 
     const navigate = useNavigate();
 
-    const callEndpoint = async ({ path, method = "GET" }) => {
+    const callEndpoint = async ({ path, method = "GET", body = null }) => {
         if (hasTokenExpired()) {
             invalidateToken();
 
             throw new Error("Token has expired");
         }
 
+        const fetchOptions = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            method
+        }
+
+        if (body) {
+            fetchOptions.body = JSON.stringify(body);
+        }
+
         return await (
-            await fetch(`${SPOTIFY_API_URL}${path}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                method
-            })).json();
+            await fetch(`${SPOTIFY_API_URL}${path}`, fetchOptions)).json();
     }
 
     const loadCurrentUserProfile = async () => {
