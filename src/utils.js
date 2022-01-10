@@ -8,3 +8,8 @@ export const generateState = (length) => {
   
     return text;
 };
+
+export const millisToMinutesAndSeconds = (millis) => {
+    const d = new Date(millis)
+    return d.getMinutes() + ":" + (d.getSeconds() < 10 ? '0' : '') + d.getSeconds();
+  }
