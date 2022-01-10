@@ -75,6 +75,10 @@ const useProvideSpotify = () => {
         }
     }
 
+    const playTrack = trackUri => {
+        callEndpoint({ path: '/me/player/play', method: 'PUT', body: { uris: [trackUri], position_ms: 0 } });
+    };
+
     const login = () => {
         const popup = window.open(`${SPOTIFY_AUTH_ENDPOINT}?client_id=${encodeURIComponent(REACT_APP_SPOTIFY_CLIENT_ID)}&redirect_uri=${encodeURIComponent(REACT_APP_SPOTIFY_REDIRECT_URI)}&scope=${encodeURIComponent(REACT_APP_SPOTIFY_SCOPES)}&state=${generateState(16)}&response_type=token&show_dialog=true`,
         "Connectez-vous avec Spotify", "width=600,height=600");
@@ -198,6 +202,7 @@ const useProvideSpotify = () => {
             return hasRedirectedFromValidSpotifyAuth();
         },
         saveTokenWhenRedirected,
-        callEndpoint
+        callEndpoint,
+        playTrack
     }
 }
