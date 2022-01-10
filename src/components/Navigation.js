@@ -2,21 +2,23 @@ import { Box, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Divide
 import { Home as HomeIcon, Search as SearchIcon, LibraryMusic as LibraryMusicIcon } from '@mui/icons-material';
 
 import RecentlyPlayedTracks from './RecentlyPlayedTracks';
+import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
+    let navigate = useNavigate();
     return (
         <>
         <Box sx={{ bgcolor: 'background.paper' }}>
             <List>
-                <ListItem disablePadding>
+                <ListItem disablePadding onClick={() => { navigate('/dashboard') }}>
                     <ListItemButton>
                         <ListItemIcon>
                             <HomeIcon />
                         </ListItemIcon>
                         <ListItemText primary="Accueil" />
-                    </ListItemButton>
+                    </ListItemButton>   
                 </ListItem>
-                <ListItem disablePadding>
+                <ListItem disablePadding onClick={() => { navigate('/dashboard/search') }}>
                     <ListItemButton>
                         <ListItemIcon>
                             <SearchIcon />
@@ -24,7 +26,7 @@ const Navigation = () => {
                         <ListItemText primary="Recherche" />
                     </ListItemButton>
                 </ListItem>
-                <ListItem disablePadding>
+                <ListItem disablePadding onClick={() => { navigate('/dashboard/library') }}>
                     <ListItemButton>
                         <ListItemIcon>
                             <LibraryMusicIcon />

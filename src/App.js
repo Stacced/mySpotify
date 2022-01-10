@@ -2,6 +2,11 @@ import { Navigate, Routes, Route } from 'react-router-dom';
 import SpotifyAuthRedirect from './components/SpotifyAuthRedirect';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import ArtistView from './components/ArtistView';
+import AlbumView from './components/AlbumView';
+import PlaylistView from './components/PlaylistView';
+import Search from './components/Search';
+import UserLibrary from './components/UserLibrary';
 import { useSpotify } from './hooks/spotify';
 
 const App = () => {
@@ -28,7 +33,13 @@ const App = () => {
                             <Navigate to="/" />
                         )
                     } />
-                    <Route path="/dashboard" element={ hasLoggedIn ? <Dashboard /> : <Navigate to="/" /> } />
+                    <Route path="/dashboard" element={ hasLoggedIn ? <Dashboard /> : <Navigate to="/" /> }>
+                        <Route path="/dashboard/search" element={ <Search /> } />
+                        <Route path="/dashboard/library" element={ <UserLibrary /> } />
+                        <Route path="/dashboard/artist/:id" element={ <ArtistView /> } />
+                        <Route path="/dashboard/album/:id" element={ <AlbumView /> } />
+                        <Route path="/dashboard/playlist/:id" element={ <PlaylistView /> } />
+                    </Route>
                 </Routes>
                 </>
             )}

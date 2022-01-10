@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FormControl, Grid, InputAdornment, InputLabel, List, ListItem, Select, MenuItem, TextField, Typography, Box } from "@mui/material";
 import { Search as SearchIcon } from '@mui/icons-material';
 import { useSpotify } from '../hooks/spotify';
@@ -6,7 +7,8 @@ import { useSpotify } from '../hooks/spotify';
 const Search = () => {
     const [search, setSearch] = useState({ value: '', category: 'artist' });
     const [searchResults, setSearchResults] = useState([]);
-    const { callEndpoint } = useSpotify();
+    const { callEndpoint, playTrack } = useSpotify();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (search.value) {
@@ -28,6 +30,14 @@ const Search = () => {
 
     const handleSearchCategoryChange = e => {
         setSearch({ ...search, category: e.target.value });
+    }
+
+    const handleSearchResultClick = e => {
+        if (search.category === 'track') {
+            playTrack(e.currentTarget.dataset.uri);
+        } else {
+            navigate(`/dashboard/${search.category}/${e.currentTarget.dataset.id}`);
+        }
     }
 
     return (
@@ -57,8 +67,8 @@ const Search = () => {
                     searchResults
                     .sort((a, b) => b.popularity - a.popularity) // Sort by popularity for artists, doesn't impact other categories
                     .map(result => (
-                        <ListItem key={result.id}>
-                            { result.images[0]?.url && <img src={result.images[0].url} alt="Cover" width="200vw" /> }
+                        <ListItem key={result.id} data-id={result.id} data-uri={result.uri} onClick={handleSearchResultClick}>
+                            { result.hasOwnProperty('images') ? <img src={result.images[0]?.url} alt="Cover" width="200vw" /> : <img src={result.album.images[0]?.url} alt="Cover" width="200vw" /> }
                             <Typography variant="h6" sx={{ paddingLeft: '2vw' }}>{result.name}</Typography>
                         </ListItem>
                     ))
