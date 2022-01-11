@@ -11,6 +11,7 @@ const PlaylistView = () => {
 
     useEffect(() => {
         callEndpoint({ path: `/playlists/${id}` })
+        .then(r => r.json())
         .then(playlist => {
             setPlaylist(playlist);
             console.log(playlist);

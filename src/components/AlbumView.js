@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useSpotify } from '../hooks/spotify';
 import { millisToMinutesAndSeconds } from '../utils';
+import Loading from './Loading';
 
 const AlbumView = () => {
     const { id } = useParams();
@@ -11,6 +12,7 @@ const AlbumView = () => {
 
     useEffect(() => {
         callEndpoint({ path: `/albums/${id}?market=FR` })
+        .then(r => r.json())
         .then(album => {
             setAlbum({ ...album, release_date: new Date(album.release_date).toLocaleDateString() });
         })

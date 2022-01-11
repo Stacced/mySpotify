@@ -11,6 +11,7 @@ const UserLibrary = () => {
 
     useEffect(() => {
         callEndpoint({ path: '/me/playlists' })
+        .then(r => r.json())
         .then(res => {
             setUserPlaylists(res.items);
         })

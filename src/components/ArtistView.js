@@ -11,9 +11,11 @@ const ArtistView = () => {
 
     useEffect(() => {
         callEndpoint({ path: `/artists/${id}` })
+        .then(r => r.json())
         .then(artist => {
             setArtist(artist);
             callEndpoint({ path: `/artists/${id}/top-tracks?market=FR` })
+            .then(r => r.json())
             .then(res => {
                 setArtist({ ...artist, toptracks: res.tracks });
             })

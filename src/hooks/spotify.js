@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { generateState } from "../utils";
 
 const {
@@ -60,13 +61,12 @@ const useProvideSpotify = () => {
             fetchOptions.body = JSON.stringify(body);
         }
 
-        return await (
-            await fetch(`${SPOTIFY_API_URL}${path}`, fetchOptions)).json();
+        return fetch(`${SPOTIFY_API_URL}${path}`, fetchOptions);
     }
 
     const loadCurrentUserProfile = async () => {
         try {
-            const userInfo = await callEndpoint({ path: "/me" });
+            const userInfo = (await (await callEndpoint({ path: "/me" })).json());
             setUser(userInfo);
         } catch (err) {
             console.log(err);

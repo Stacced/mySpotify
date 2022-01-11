@@ -15,6 +15,7 @@ const Search = () => {
             const timeout = setTimeout(() => {
                 const path = `/search?q=${search.value}&type=${search.category}`;
                 callEndpoint({ path: path })
+                .then(r => r.json())
                 .then(res => {
                     setSearchResults(res[search.category + 's'].items);
                     console.log(res[search.category + 's']);

@@ -8,9 +8,11 @@ const RecentlyPlayedTracks = () => {
 
     useEffect(() => {
         callEndpoint({ path: '/me/player/recently-played' })
-            .then(res => {
-                setRecentlyPlayedTracks(res.items);
-            });
+        .then(r => r.json())
+        .then(res => {
+            setRecentlyPlayedTracks(res.items);
+        })
+        .catch(console.error);
     }, []);
 
     return (
