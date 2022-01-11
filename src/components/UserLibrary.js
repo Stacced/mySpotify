@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSpotify } from '../hooks/spotify';
 import { Avatar, Typography, List, ListItem, ListItemText } from '@mui/material';
+import Loading from './Loading';
 
 // This only shows playlists
 const UserLibrary = () => {
@@ -31,7 +32,7 @@ const UserLibrary = () => {
             </div>
         }
         {
-            userPlaylists && (
+            userPlaylists ? (
                 <>
                 <Typography variant='h5' sx={{ paddingTop: '20px' }}>Mes playlists</Typography>
                 <List>
@@ -43,7 +44,7 @@ const UserLibrary = () => {
                     ))}
                 </List>
                 </>
-            )
+            ) : <Loading />
         }
         </>
     )

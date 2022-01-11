@@ -19,32 +19,30 @@ const AlbumView = () => {
         .catch(console.error)
     }, [])
 
-    return (
+    return album ? (
         <>
-        { album && (
-            <>
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} >
-                <Avatar src={album.images[0]?.url} alt={album.name} sx={{ width: '5vw', height: '5vw' }} />
-                <div>
-                    <Typography variant='h4' sx={{ paddingLeft: '20px' }}>{album.name}</Typography>
-                    <Typography variant='h6' sx={{ paddingLeft: '20px' }}>{album.artists.map(artist => artist.name).join(", ")}</Typography>
-                    <Typography variant='h6' sx={{ paddingLeft: '20px' }}>Sorti le {album.release_date}</Typography>
-                </div>
+        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} >
+            <Avatar src={album.images[0]?.url} alt={album.name} sx={{ width: '5vw', height: '5vw' }} />
+            <div>
+                <Typography variant='h4' sx={{ paddingLeft: '20px' }}>{album.name}</Typography>
+                <Typography variant='h6' sx={{ paddingLeft: '20px' }}>{album.artists.map(artist => artist.name).join(", ")}</Typography>
+                <Typography variant='h6' sx={{ paddingLeft: '20px' }}>Sorti le {album.release_date}</Typography>
             </div>
-            <Box id="album-tracks" sx={{ maxHeight: '70vh', overflow: 'auto' }}>
-                <List>
-                    { album.tracks.items.map(track => (
-                        <ListItem key={track.id} onClick={() => { playTrack(track.uri) }}>
-                            { album.hasOwnProperty('images') && <img src={album.images[0]?.url} alt="Cover" width="50vw" /> }
-                            <ListItemText primary={`${track.track_number}. ${track.name} - ${millisToMinutesAndSeconds(track.duration_ms)}`} sx={{ paddingLeft: '1vw' }} />
-                        </ListItem>
-                        )
-                    )}
-                </List>
-            </Box>
-            </>
-        )}
+        </div>
+        <Box id="album-tracks" sx={{ maxHeight: '70vh', overflow: 'auto' }}>
+            <List>
+                { album.tracks.items.map(track => (
+                    <ListItem key={track.id} onClick={() => { playTrack(track.uri) }}>
+                        { album.hasOwnProperty('images') && <img src={album.images[0]?.url} alt="Cover" width="50vw" /> }
+                        <ListItemText primary={`${track.track_number}. ${track.name} - ${millisToMinutesAndSeconds(track.duration_ms)}`} sx={{ paddingLeft: '1vw' }} />
+                    </ListItem>
+                    )
+                )}
+            </List>
+        </Box>
         </>
+    ) : (
+        <Loading />
     )
 }
 
