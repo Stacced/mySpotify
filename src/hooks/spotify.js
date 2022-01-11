@@ -40,6 +40,7 @@ const useProvideSpotify = () => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
     const [tokenExp, setTokenExp] = useState(null);
+    const [selectedDeviceId, setSelectedDeviceId] = useState(null);
 
     const navigate = useNavigate();
 
@@ -76,7 +77,7 @@ const useProvideSpotify = () => {
     }
 
     const playTrack = trackUri => {
-        callEndpoint({ path: '/me/player/play', method: 'PUT', body: { uris: [trackUri], position_ms: 0 } })
+        callEndpoint({ path: '/me/player/play', method: 'PUT', body: { uris: [trackUri], position_ms: 0, device_id: selectedDeviceId } })
         .then(r => {
             if (r.status === 204) {
                 Swal.fire('Success', 'Track has started playing', 'success');
@@ -88,6 +89,10 @@ const useProvideSpotify = () => {
             }
         })
     };
+
+    const setDeviceId = deviceId => {
+        setSelectedDeviceId(deviceId);
+    }
 
     const login = () => {
         const popup = window.open(`${SPOTIFY_AUTH_ENDPOINT}?client_id=${encodeURIComponent(REACT_APP_SPOTIFY_CLIENT_ID)}&redirect_uri=${encodeURIComponent(REACT_APP_SPOTIFY_REDIRECT_URI)}&scope=${encodeURIComponent(REACT_APP_SPOTIFY_SCOPES)}&state=${generateState(16)}&response_type=token&show_dialog=true`,
@@ -213,6 +218,7 @@ const useProvideSpotify = () => {
         },
         saveTokenWhenRedirected,
         callEndpoint,
-        playTrack
+        playTrack,
+        setDeviceId
     }
 }
