@@ -76,7 +76,17 @@ const useProvideSpotify = () => {
     }
 
     const playTrack = trackUri => {
-        callEndpoint({ path: '/me/player/play', method: 'PUT', body: { uris: [trackUri], position_ms: 0 } });
+        callEndpoint({ path: '/me/player/play', method: 'PUT', body: { uris: [trackUri], position_ms: 0 } })
+        .then(r => {
+            if (r.status === 204) {
+                Swal.fire('Success', 'Track has started playing', 'success');
+            } else {
+                r.json()
+                .then(err => {
+                    Swal.fire('Error', err.error.message, 'error');
+                })
+            }
+        })
     };
 
     const login = () => {
